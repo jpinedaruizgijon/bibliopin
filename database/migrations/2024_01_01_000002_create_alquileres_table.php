@@ -15,6 +15,7 @@ return new class extends Migration
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
             $table->timestamps();
+            // Clave foranea que vincula el alquiler con su libro
             $table->foreignId('libro_id')->constrained('libros');
         });
     }

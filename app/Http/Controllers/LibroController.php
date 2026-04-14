@@ -9,6 +9,7 @@ class LibroController extends Controller
 {
     public function index(Request $request)
     {
+        // Empiezo la consulta ordenada por titulo y voy añadiendo filtros segun lo que venga en la URL
         $query = Libro::orderBy('titulo');
 
         if ($request->has('disponible')) {
@@ -17,6 +18,7 @@ class LibroController extends Controller
 
         if ($request->filled('busqueda')) {
             $busqueda = $request->busqueda;
+            // Busco por titulo o por autor
             $query->where(function ($q) use ($busqueda) {
                 $q->where('titulo', 'like', '%' . $busqueda . '%')
                   ->orWhere('autor', 'like', '%' . $busqueda . '%');
@@ -39,6 +41,7 @@ class LibroController extends Controller
 
     public function store(Request $request)
     {
+        // Valido los datos antes de guardar, el ISBN tiene que ser unico en la tabla
         $request->validate([
             'titulo'           => 'required|max:255',
             'autor'            => 'required|max:255',
